@@ -1,0 +1,114 @@
+@font-face {
+    font-family: 'libre';
+    src: url(fonts/LibreBaskerville-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'calistoga-bold';
+    src: url(fonts/Calistoga-Regular.ttf);
+}
+
+.poster{
+    position: relative;
+    width: 100%;
+    height: 92.2vh;
+}
+
+.poster img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+}
+
+.poster .overlay{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.164);
+}
+
+.poster .overlay h1{
+    z-index: 2;
+    margin-top: auto;
+    margin-bottom: 1.5vh;
+    font-family: 'calistoga-bold';
+    font-size: clamp(3rem, 0.16344rem + 12.11vw, 10rem);
+    font-weight: bold;
+    color: white;
+    padding-bottom: 1vh;
+}
+
+.content-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80vh;
+    padding: 5vh;
+    overflow: hidden;
+}
+
+.section-title{
+    padding-bottom: 1vh;
+}
+
+.section-title h2{
+    font-family: 'calistoga-bold';
+    font-size: clamp(3rem, 0.16344rem + 6.918vw, 7rem);
+    font-weight: bold;
+    color: rgb(45,45,45);
+    text-align: center;
+}
+
+.section-button{
+    border: none;
+    border-radius: 5rem;
+    margin: 5vh 0 5vh 0;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    background-color: rgb(45,45,45);
+    color: white;
+}
+
+
+.section-txt p{
+    font-family: 'libre';
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(45,45,45);
+}
+
+#services{
+    background-color: rgb(241, 238, 238);
+}
+
+#appointements{
+    background-color: rgb(238, 230, 230);
+}
+
+#faqs{
+    background-color: rgb(241, 238, 238);
+}
+
+#coffee{
+    background-color: rgb(240, 244, 232);
+}
+
+#patient-resources{
+    background-color: rgb(241, 238, 238);
+}
+
+#question{
+    background-color: rgb(238, 230, 230);
+}
+
+@media (max-width: 992px) { 
+    .poster{
+        height: 86vh;
+    }
+  }
