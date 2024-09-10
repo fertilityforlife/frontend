@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fertility Center Assistant</title>
+</head>
+<body>
+    <h1>Chat with Our Fertility Assistant</h1>
+    <textarea id="userInput"></textarea>
+    <button onclick="sendMessage()">Send</button>
+    <p>Assistant Response: <span id="assistantResponse"></span></p>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            fetch('http://127.0.0.1:5000/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer your_token_here'  // If using token-based authentication
+                },
+                body: JSON.stringify({message: userInput})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('assistantResponse').innerText = data.response;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+</html>
