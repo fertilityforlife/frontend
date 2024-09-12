@@ -11,21 +11,26 @@
     <p>Assistant Response: <span id="assistantResponse"></span></p>
 
     <script>
-        function sendMessage() {
+        async function sendMessage() {
             const userInput = document.getElementById('userInput').value;
-            fetch('http://127.0.0.1:5000/api/chat', {
+            const thread = localStorage.getItem('thread');  // Retrieve the thread ID from local storage
+
+            const requestBody = { message: userInput };
+            if (thread) {
+                requestBody.thread = thread;  // Include the thread ID if it exists
+            }
+
+            const response = await fetch('http://127.0.0.1:5000/api/chat', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    //'Authorization': 'Bearer your_token_here'  // If using token-based authentication
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({message: userInput})
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('assistantResponse').innerText = data.response;
-            })
-            .catch(error => console.error('Error:', error));
+                body: JSON.stringify(requestBody)
+            });
+
+            const data = await response.json();
+            document.getElementById('chat-box').innerHTML += `<p>${data.response}</p>`;
+            localStorage.setItem('thread', data.thread);  // Store the thread ID in local storage
         }
     </script>
 
