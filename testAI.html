@@ -29,6 +29,7 @@
             });
 
             const data = await response.json();
+            console.log(data);
             document.getElementById('chat-box').innerHTML += `<p>${data.response}</p>`;
             localStorage.setItem('thread', data.thread);  // Store the thread ID in local storage
         }
