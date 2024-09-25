@@ -1,0 +1,24 @@
+<div id="chat-bubble"></div>
+<div id="chat-popup">
+    <div id="chat-header">
+        <span>Chat with Our Assistant</span>
+        <span class="close-btn" onclick="toggleChatPopup()">✖</span>
+    </div>
+    <div id="chat-body">
+        <div id="chat-box">
+            <!-- Chat messages will be appended here -->
+        </div>
+    </div>
+    <div id="chat-footer" class="chat-footer">
+        <div id="input-control">
+            <button id="end-chat" onclick="endChat()" disabled>&#9743;</button>
+            <div id="input-section">
+                <input type="text" id="userInput" placeholder="Type your message here">
+                <button id="send-button" onclick="sendMessage()" disabled>&#8593;</button>
+            </div>
+        </div>
+        <div id="chat-disclaimer">
+            <p>This assistant can make mistakes. Check important info.</p>
+        </div>
+    </div>
+</div>
