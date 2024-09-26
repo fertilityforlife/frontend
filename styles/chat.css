@@ -100,8 +100,8 @@
 
 /* Styles for the chat header */
 #chat-header {
-    background-color: #007bff;
-    color: white;
+    background-color: rgb(240,238,238);
+    color: rgb(45,45,45);
     padding: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -126,6 +126,17 @@
     flex: 0.9;
     padding: 10px;
     overflow-y: auto;
+    position: relative;
+}
+
+#chat-logo{
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+
 }
 
 /* Styles for the chat footer */
@@ -168,12 +179,19 @@
     width: 40px;
     height: 40px;
     padding: 5px 10px;
-    background-color: rgb(45,45,45);
     color: white;
     border: none;
     border-radius: 20rem;
     cursor: pointer;
     opacity: 1;
+}
+
+#send-button{
+    background-color: rgb(45,45,45);
+}
+
+#end-chat {
+    background-color: #dc3545;
 }
 
 #chat-footer button:disabled {
@@ -193,6 +211,50 @@
     margin: 0; 
     font-size: 0.7rem; 
     opacity: 0.65;
+}
+
+.assistant-message{
+    display: grid;
+    padding: 1.5rem 0 1.5rem 0;
+    grid-template-columns: 4.5rem 1fr;
+}
+
+.assistant-message img{
+    margin: 0 0 0 1.5rem;
+    height: 40px;
+    width: 40px;
+    align-self: start;
+    justify-self : center;
+}
+
+.assistant-message p{
+    margin: 0 10% 0 5%;
+    align-self: center;
+}
+
+.user-message{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding: 1.5rem 0 1.5rem 0;
+    width: 100%;
+}
+
+.user-message .user-message-wrapper{
+    margin: 0 5% 0 15%;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    background-color: rgb(45,45,45);
+    border-radius: 10rem;
+}
+
+.user-message p{
+    margin: 0;
+    padding-right: 5%;
+    width: 100%;
+    text-align: center;
+    color: white;
 }
 
 /* Media query for smaller screens */

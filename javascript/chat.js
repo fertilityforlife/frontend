@@ -1,3 +1,8 @@
+const CONFIG = {
+    BACKEND_URL: 'https://api.fertilityforlife.com'
+    //BACKEND_URL: 'http://127.0.0.1:5000'
+};
+
 // Function to toggle the chat popup
 function toggleChatPopup() {
     const chatPopup = document.getElementById('chat-popup');
@@ -59,6 +64,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Add event listener to the send button to make button disabled when input is empty
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('send-button');
+        chatBody = document.getElementById('chat-box');
+        const chatLogo = document.getElementById('chat-logo');
 
         userInput.addEventListener('input', function() {
             if (this.value.trim() === '') {
@@ -67,6 +74,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                 sendButton.disabled = false;
             }
         });
+
+        
+        // Create a MutationObserver to monitor changes in the chat body
+        const observer = new MutationObserver(function(mutationsList, observer) {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                    // Check if the chat body has any content
+                    if (chatBody.innerHTML.trim() !== '') {
+                        chatLogo.style.display = 'none';
+                    } else {
+                        chatLogo.style.display = 'block';
+                    }
+                }
+            }
+        });
+
+        // Start observing the chat body for changes
+        observer.observe(chatBody, { childList: true, subtree: true, characterData: true });
     } catch (error) {
         console.error('Error loading chat HTML:', error);
     }
@@ -75,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 async function sendMessage() {
     const userInput = document.getElementById('userInput').value;
     document.getElementById('userInput').value = '';  // Clear the input field
-    document.getElementById('chat-box').innerHTML += `<p>${userInput}</p>`;
+    document.getElementById('chat-box').innerHTML += `<div class="user-message"><div class="user-message-wrapper"><p>${userInput}</p></div></div>`;
     const thread_id = localStorage.getItem('thread_id');  // Retrieve the thread ID from local storage
     console.log(thread_id);
     const requestBody = { message: userInput };
@@ -84,7 +109,7 @@ async function sendMessage() {
         requestBody.thread_id = thread_id;  // Include the thread ID  in the request body if it exists
     }
 
-    const response = await fetch('http://127.0.0.1:5000/api/chat', {
+    const response = await fetch(`${CONFIG.BACKEND_URL}/api/chat`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -93,12 +118,10 @@ async function sendMessage() {
     });
 
     const data = await response.json();
-    document.getElementById('chat-box').innerHTML += `<p>${data.response}</p>`;
+    document.getElementById('chat-box').innerHTML += `<div class="assistant-message"><img src="/images/seagul.png"><p>${data.response}</p></div>`;
     localStorage.setItem('thread_id', data.thread_id);  // Store the thread ID in local storage
     if (data.thread_id) {
         // Add event listener to the send button to make button disabled when input is empty
-        const userInput = document.getElementById('userInput');
-        const sendButton = document.getElementById('send-button');
         const endChatButton = document.getElementById('end-chat');
         endChatButton.disabled = false;
     }
@@ -112,8 +135,9 @@ async function endChat() {
         localStorage.removeItem('thread_id');  // Remove the thread ID from local storage
     }
     document.getElementById('chat-box').innerHTML = '';  // Clear the chat box
+    document.getElementById('end-chat').disabled = true;  // Disable the end chat button
     //send a request to backend to end the chat.
-    const response = await fetch('http://127.0.0.1:5000/api/endChat', {
+    const response = await fetch(`${CONFIG.BACKEND_URL}/api/endChat`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
