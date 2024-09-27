@@ -100,8 +100,8 @@
 
 /* Styles for the chat header */
 #chat-header {
-    background-color: rgb(240,238,238);
-    color: rgb(45,45,45);
+    background-color: rgb(45,45,45);
+    color: rgb(255,255,255);
     padding: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -110,6 +110,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+#chat-header span{
+    margin: auto;
 }
 
 /* Styles for the close button */
@@ -176,8 +180,8 @@
 }
 
 #chat-footer button {
-    width: 40px;
-    height: 40px;
+    width: 40px !important;
+    height: 40px !important;
     padding: 5px 10px;
     color: white;
     border: none;
@@ -251,9 +255,7 @@
 
 .user-message p{
     margin: 0;
-    padding-right: 5%;
     width: 100%;
-    text-align: center;
     color: white;
 }
 
@@ -261,9 +263,9 @@
 @media (max-width: 600px) {
     #chat-popup {
         width: 90%;
-        height: 80%;
-        bottom: 120px; /* Adjusted to open slightly higher than the bubble */
-        right: 5%;
+        height: 87.5%;
+        bottom: 12.5%; /* Adjusted to open slightly higher than the bubble */
+        right: 0;
         border-radius: 10px;
     }
 
