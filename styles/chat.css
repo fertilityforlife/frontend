@@ -85,12 +85,13 @@
     height: 80%;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 1rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: none;
     transform-origin: bottom right;
     z-index: 1001; /* Ensure the popup is above other elements */
     flex-direction: column;
+    overflow: hidden;
 }
 
 /* Animation class for the chat popup */
@@ -100,11 +101,8 @@
 
 /* Styles for the chat header */
 #chat-header {
-    background-color: rgb(45,45,45);
-    color: rgb(255,255,255);
+    color: rgb(45,45,45);
     padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     font-size: 18px;
     text-align: center;
     display: flex;
@@ -267,10 +265,5 @@
         bottom: 12.5%; /* Adjusted to open slightly higher than the bubble */
         right: 0;
         border-radius: 10px;
-    }
-
-    #chat-header {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
     }
 }
