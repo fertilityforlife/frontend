@@ -3,26 +3,8 @@ const CONFIG = {
     //BACKEND_URL: 'http://127.0.0.1:5000'
 };
 
-// Function to toggle the chat popup
-function toggleChatPopup() {
-    const chatPopup = document.getElementById('chat-popup');
-    if (chatPopup.style.display === 'none' || chatPopup.style.display === '') {
-        chatPopup.style.display = 'flex';
-        chatPopup.classList.add('expand-animation');
-    } else {
-        chatPopup.style.display = 'none';
-        chatPopup.classList.remove('expand-animation');
-    }
-}
-
-// Ensure the chat popup is hidden by default on page load and add event listener to the chat bubble
-window.onload = function() {
-    const chatPopup = document.getElementById('chat-popup');
-    chatPopup.style.display = 'none';
-
-    const chatBubble = document.getElementById('chat-bubble');
-    chatBubble.addEventListener('click', toggleChatPopup);
-}
+let isPopupOpen = false; // Flag to track the state of the popup
+let isToggling = false; // Flag to prevent multiple toggles
 
 // Function to load the chat HTML
 async function loadChat() {
@@ -55,7 +37,54 @@ async function loadChat() {
         });
 }
 
-// Add a single DOMContentLoaded event listener
+// Function to toggle the chat popup
+function toggleChatPopup() {
+    if (isToggling) return; // Prevent multiple toggles
+    isToggling = true;
+
+    const chatPopup = document.getElementById('chat-popup');
+    const backgroundOverlay = document.getElementById('background-overlay');
+    const body = document.body;
+
+    if (!chatPopup || !backgroundOverlay) {
+        console.error('Chat popup or background overlay element not found');
+        isToggling = false;
+        return;
+    }
+
+    if (!isPopupOpen) {
+        // Open the chat popup
+        chatPopup.style.display = 'flex';
+        chatPopup.classList.add('expand-animation');
+        chatPopup.classList.remove('collapse-animation');
+        backgroundOverlay.style.opacity = '1';
+        backgroundOverlay.style.pointerEvents = 'auto';
+        chatPopup.style.pointerEvents = 'auto';  // Enable pointer events on the chat popup
+        body.classList.add('no-scroll');
+        isPopupOpen = true;
+    } else {
+        // Close the chat popup
+        chatPopup.classList.remove('expand-animation');
+        chatPopup.classList.add('collapse-animation');
+        //chatPopup.style.display = 'none';
+        backgroundOverlay.style.opacity = '0';
+        backgroundOverlay.style.pointerEvents = 'none';
+        chatPopup.style.pointerEvents = 'none';  // Disable pointer events on the chat popup
+        body.classList.remove('no-scroll');
+        isPopupOpen = false;
+        setTimeout(() => {
+            chatPopup.style.display = 'none';
+            isPopupOpen = false;
+        }, 300); // Match the duration of the CSS transition
+    }
+
+    // Allow toggling again after a short delay
+    setTimeout(() => {
+        isToggling = false;
+    }, 300); // Adjust the delay as needed
+}
+
+// Ensure the chat popup is hidden by default on page load and add event listener to the chat bubble
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         // Call loadChat when the page loads
@@ -64,38 +93,63 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Add event listener to the send button to make button disabled when input is empty
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('send-button');
-        chatBody = document.getElementById('chat-box');
+        const chatBody = document.getElementById('chat-box');
         const chatLogo = document.getElementById('chat-logo');
 
         userInput.addEventListener('input', function() {
-            if (this.value.trim() === '') {
-                sendButton.disabled = true;
-            } else {
-                sendButton.disabled = false;
-            }
+            sendButton.disabled = this.value.trim() === '';
         });
 
-        
         // Create a MutationObserver to monitor changes in the chat body
-        const observer = new MutationObserver(function(mutationsList, observer) {
+        const observer = new MutationObserver(function(mutationsList) {
             for (const mutation of mutationsList) {
                 if (mutation.type === 'childList' || mutation.type === 'characterData') {
                     // Check if the chat body has any content
-                    if (chatBody.innerHTML.trim() !== '') {
-                        chatLogo.style.display = 'none';
-                    } else {
-                        chatLogo.style.display = 'block';
-                    }
+                    chatLogo.style.display = chatBody.innerHTML.trim() !== '' ? 'none' : 'block';
                 }
             }
         });
 
-        // Start observing the chat body for changes
-        observer.observe(chatBody, { childList: true, subtree: true, characterData: true });
+        observer.observe(chatBody, { childList: true, characterData: true, subtree: true });
+
+        // Ensure the chat popup and background overlay are hidden by default
+        const chatPopup = document.getElementById('chat-popup');
+        const backgroundOverlay = document.getElementById('background-overlay');
+        if (chatPopup) {
+            chatPopup.style.display = 'none';
+            chatPopup.style.pointerEvents = 'none';  // Disable pointer events on the chat popup
+        } else {
+            console.error('Chat popup element not found');
+        }
+
+        if (backgroundOverlay) {
+            backgroundOverlay.style.opacity = '0';
+            backgroundOverlay.style.pointerEvents = 'none';  // Disable pointer events on the background overlay
+        } else {
+            console.error('Background overlay element not found');
+        }
+
+        // Add event listener to the background overlay
+        if (backgroundOverlay) {
+            backgroundOverlay.addEventListener('click', function(event) {
+                // Check if the click is on the overlay and not on the popup itself
+                if (event.target === backgroundOverlay) {
+                    toggleChatPopup();
+                }
+            });
+        }
+
+        // Prevent event propagation on the chat popup
+        if (chatPopup) {
+            chatPopup.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        }
     } catch (error) {
-        console.error('Error loading chat HTML:', error);
+        console.error('Error during DOMContentLoaded:', error);
     }
 });
+
 
 async function sendMessage() {
     const userInput = document.getElementById('userInput').value;
