@@ -5,7 +5,13 @@
         <span>Chat with Fifle</span>
     </div>
     <div id="chat-body">
-        <img src="/images/seagul.png" alt="seagull fertility for life logo" id="chat-logo">
+        <!-- <img src="/images/seagul.png" alt="seagull fertility for life logo" id="chat-logo"> -->
+        <div id="chat-type">
+            <button id="chat-type-patient" onclick="setChatType('patient')">Patient</button>
+            <button id="chat-type-doctor" onclick="setChatType('doctor')">Doctor</button>
+            <button id="chat-type-student" onclick="setChatType('student')">Student</button>
+            <button id="chat-type-nurse" onclick="setChatType('nurse')">Nurse</button>
+        </div>
         <div id="chat-box">
             <!-- Chat messages will be appended here -->
         </div>

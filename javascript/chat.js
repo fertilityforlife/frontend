@@ -61,6 +61,7 @@ function toggleChatPopup() {
         backgroundOverlay.style.pointerEvents = 'auto';
         chatPopup.style.pointerEvents = 'auto';  // Enable pointer events on the chat popup
         body.classList.add('no-scroll');
+        userInput.focus();
         isPopupOpen = true;
     } else {
         // Close the chat popup
@@ -84,11 +85,27 @@ function toggleChatPopup() {
     }, 300); // Adjust the delay as needed
 }
 
+function setChatType (chosenValue) {
+    let chat_type = chosenValue;
+    const userInput = document.getElementById('userInput');
+    if (chat_type === 'none') {
+        userInput.disabled = true;
+        userInput.placeholder = 'Select a chat type to enable the chat';
+    }
+    else {
+        userInput.disabled = false;
+        userInput.placeholder = 'Type your message here...';
+        userInput.focus();
+    }
+    return chat_type;
+}
+
 // Ensure the chat popup is hidden by default on page load and add event listener to the chat bubble
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         // Call loadChat when the page loads
         await loadChat();
+        let chat_type = setChatType('none');
 
         // Add event listener to the send button to make button disabled when input is empty
         const userInput = document.getElementById('userInput');
