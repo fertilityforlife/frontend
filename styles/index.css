@@ -1,12 +1,12 @@
-/* @font-face {
+@font-face {
     font-family: 'libre';
-    src: url(fonts/LibreBaskerville-Regular.ttf);
-} */
+    src: url(../fonts/LibreBaskerville-Regular.ttf);
+} 
 
-/* @font-face {
+@font-face {
     font-family: 'calistoga-bold';
-    src: url(fonts/Calistoga-Regular.ttf);
-} */
+    src: url(../fonts/Calistoga-Regular.ttf);
+}
 
 .poster{
     position: relative;

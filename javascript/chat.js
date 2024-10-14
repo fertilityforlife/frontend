@@ -45,6 +45,7 @@ function toggleChatPopup() {
     const chatPopup = document.getElementById('chat-popup');
     const backgroundOverlay = document.getElementById('background-overlay');
     const body = document.body;
+    const userInput = document.getElementById('userInput');
 
     if (!chatPopup || !backgroundOverlay) {
         console.error('Chat popup or background overlay element not found');
@@ -61,7 +62,6 @@ function toggleChatPopup() {
         backgroundOverlay.style.pointerEvents = 'auto';
         chatPopup.style.pointerEvents = 'auto';  // Enable pointer events on the chat popup
         body.classList.add('no-scroll');
-        userInput.focus();
         isPopupOpen = true;
     } else {
         // Close the chat popup
@@ -72,6 +72,7 @@ function toggleChatPopup() {
         backgroundOverlay.style.pointerEvents = 'none';
         chatPopup.style.pointerEvents = 'none';  // Disable pointer events on the chat popup
         body.classList.remove('no-scroll');
+        userInput.blur();
         isPopupOpen = false;
         setTimeout(() => {
             chatPopup.style.display = 'none';
@@ -95,6 +96,7 @@ function setChatType (chosenValue) {
     else {
         userInput.disabled = false;
         userInput.placeholder = 'Type your message here...';
+        document.getElementById(`chat-type-${chat_type}`).style.border = 'solid #007bff 4px'; // Highlight the selected chat type
         userInput.focus();
     }
     return chat_type;
@@ -170,6 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 async function sendMessage() {
     const userInput = document.getElementById('userInput').value;
+    document.getElementById('chat-type').style.display = 'none'; 
     document.getElementById('userInput').value = '';  // Clear the input field
     document.getElementById('chat-box').innerHTML += `<div class="user-message"><div class="user-message-wrapper"><p>${userInput}</p></div></div>`;
     const thread_id = localStorage.getItem('thread_id');  // Retrieve the thread ID from local storage
@@ -207,6 +210,7 @@ async function endChat() {
     }
     document.getElementById('chat-box').innerHTML = '';  // Clear the chat box
     document.getElementById('end-chat').disabled = true;  // Disable the end chat button
+    document.getElementById('chat-type').style.display = 'grid';  // Show the chat type selection
     //send a request to backend to end the chat.
     const response = await fetch(`${CONFIG.BACKEND_URL}/api/endChat`, {
         method: 'POST',

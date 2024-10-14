@@ -180,10 +180,10 @@
 
 #chat-type{
     position: absolute;
-    top:10%;
+    bottom:5%;
     left: 10%;
     width: 80%;
-    height: 80%;
+    height: 20%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -198,8 +198,6 @@
     font-size: 1.5rem;
     cursor: pointer;
     outline: none;
-    
-    
 }
 
 #chat-logo{
@@ -207,7 +205,7 @@
     height: 100px;
     margin: 0;
     position: absolute;
-    top: 45%;
+    top: 35%;
     left: 45%;
 
 }
@@ -336,5 +334,9 @@
         bottom: 12.5%; /* Adjusted to open slightly higher than the bubble */
         right: 0;
         border-radius: 10px;
+    }
+
+    #chat-logo{
+        left: 40%;
     }
 }
