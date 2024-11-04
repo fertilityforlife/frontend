@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'serif1';
+    src: url(../fonts/serif1.ttf);
+} 
+
+h1{
+    font-family: 'serif1';
+}
+
+h2{
+    font-family: 'serif1';
+}

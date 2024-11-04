@@ -37,7 +37,6 @@
     z-index: 2;
     margin-top: auto;
     margin-bottom: 1.5vh;
-    font-family: 'calistoga-bold';
     font-size: clamp(2.8rem, -0.241rem + 12.996vw, 10rem);
     font-weight: bold;
     color: white;
@@ -59,7 +58,6 @@
 }
 
 .section-title h2{
-    font-family: 'calistoga-bold';
     font-size: clamp(3rem, 0.16344rem + 6.918vw, 7rem);
     font-weight: bold;
     color: rgb(45,45,45);

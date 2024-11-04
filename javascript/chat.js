@@ -172,6 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 async function sendMessage() {
     const userInput = document.getElementById('userInput').value;
+    if (userInput.trim() === '') return;  // Do not send empty messages
     document.getElementById('chat-type').style.display = 'none'; 
     document.getElementById('userInput').value = '';  // Clear the input field
     document.getElementById('chat-box').innerHTML += `<div class="user-message"><div class="user-message-wrapper"><p>${userInput}</p></div></div>`;
@@ -198,7 +199,7 @@ async function sendMessage() {
         // Add event listener to the send button to make button disabled when input is empty
         const endChatButton = document.getElementById('end-chat');
         endChatButton.disabled = false;
-    }
+    } 
 }
 
 async function endChat() {
