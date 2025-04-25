@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fertility Center Assistant</title>
+</head>
+<body>
+    <h1>Chat with Our Fertility Assistant</h1>
+    <div id="chat-box"></div>
+        <!-- Chat messages will be appended here -->
+    </div>
+    <input type="text" id="userInput" placeholder="Type your message here">
+    <button onclick="sendMessage()">Send</button>
+    <button onclick="endChat()">End Chat</button>
+    
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            document.getElementById('userInput').value = '';  // Clear the input field
+            const thread_id = localStorage.getItem('thread_id');  // Retrieve the thread ID from local storage
+            console.log(thread_id);
+            const requestBody = { message: userInput };
+            if (thread_id) {
+                console.log('Thread ID exists');
+                requestBody.thread_id = thread_id;  // Include the thread ID if it exists
+            }
+
+            const response = await fetch('http://127.0.0.1:5000/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            const data = await response.json();
+            document.getElementById('chat-box').innerHTML += `<p>${data.response}</p>`;
+            localStorage.setItem('thread_id', data.thread_id);  // Store the thread ID in local storage
+            //console.log(data.thread);
+        }
+
+        async function endChat() {
+            const thread_id = localStorage.getItem('thread_id');  // Retrieve the thread ID from local storage
+            const requestBody = {};
+            if (thread_id) {
+                requestBody.thread_id = thread_id;  // Include the thread ID if it exists
+                localStorage.removeItem('thread_id');  // Remove the thread ID from local storage
+            }
+            document.getElementById('chat-box').innerHTML = '';  // Clear the chat box
+            //send a request to backend to end the chat.
+            const response = await fetch('http://127.0.0.1:5000/api/endChat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+            console.log(await response.json());
+            console.log('Chat ended and thread ID cleared');
+        }
+
+        window.addEventListener('beforeunload', function(event) {
+            const thread_id = localStorage.getItem('thread_id');  // Retrieve the thread ID from local storage
+            if (thread_id) {
+                endChat();  // End the chat if it exists
+                 // Display a confirmation dialog to delay the unload
+                event.returnValue = 'Are you sure you want to leave? You will lose your chat.';
+                return 'Are you sure you want to leave? You will lose your chat.';
+            }
+        });
+
+    </script>
+
+</body>
+</html>

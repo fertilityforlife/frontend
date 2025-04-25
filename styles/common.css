@@ -1,0 +1,103 @@
+@font-face {
+    font-family: 'serif1';
+    src: url(../fonts/serif1.ttf);
+} 
+
+h1{
+    font-family: 'serif1';
+}
+
+h2{
+    font-family: 'serif1';
+}
+
+h3{
+    font-family: 'serif1';
+}
+
+.poster{
+    position: relative;
+    width: 100%;
+    height: 80vh;
+}
+
+.poster img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 63% 10%;
+    margin: 0;
+}
+
+.poster .overlay{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.164);
+    
+}
+
+.poster .overlay h1{
+    z-index: 2;
+    margin-top: auto;
+    margin-bottom: 1.5vh;
+    font-size: calc(80vw * 0.16);
+    font-weight: bold;
+    color: white;
+    padding-bottom: 1vh;
+}
+
+.arrow-down{
+    position: absolute;
+    top: 5%;
+}
+
+.content-section{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80vh;
+    padding: 5vh;
+    overflow: hidden;
+}
+
+.section-title{
+    padding-bottom: 1vh;
+}
+
+.section-title h2{
+    font-size: clamp(3rem, 0.16344rem + 6.918vw, 7rem);
+    font-weight: bold;
+    color: rgb(45,45,45);
+    text-align: center;
+}
+
+.section-button{
+    border: none;
+    border-radius: 5rem;
+    margin: 5vh 0 5vh 0;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    background-color: rgb(45,45,45);
+    color: white;
+}
+
+
+.section-txt p{
+    font-family: 'sans-serif';
+    font-size: 1.5rem;
+    text-align: center;
+    color: rgb(45,45,45);
+}
+
+@media (max-width: 992px) { 
+    .poster{
+        height: 74vh;
+    }
+  }

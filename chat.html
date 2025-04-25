@@ -1,0 +1,31 @@
+<div id="chat-bubble"></div>
+<div id="background-overlay"></div>
+<div id="chat-popup">
+    <div id="chat-header">
+        <span>Chat with Fifle</span>
+    </div>
+    <div id="chat-body">
+        <img src="/images/seagul.png" alt="seagull fertility for life logo" id="chat-logo">
+        <div id="chat-type">
+            <button id="chat-type-patient" onclick="setChatType('patient')">Patient</button>
+            <button id="chat-type-doctor" onclick="setChatType('doctor')">Doctor</button>
+            <button id="chat-type-student" onclick="setChatType('student')">Student</button>
+            <button id="chat-type-nurse" onclick="setChatType('nurse')">Nurse</button>
+        </div>
+        <div id="chat-box">
+            <!-- Chat messages will be appended here -->
+        </div>
+    </div>
+    <div id="chat-footer" class="chat-footer">
+        <div id="input-control">
+            <button id="end-chat" onclick="endChat()" disabled>&#9743;</button>
+            <div id="input-section">
+                <input type="text" id="userInput" placeholder="Type your message here">
+                <button id="send-button" onclick="sendMessage()" disabled>&#8593;</button>
+            </div>
+        </div>
+        <div id="chat-disclaimer">
+            <p>Fifle can make mistakes. Check important info.</p>
+        </div>
+    </div>
+</div>
